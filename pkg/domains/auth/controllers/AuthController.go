@@ -20,6 +20,7 @@ func RunAuthController(router *gin.Engine, usecase contracts.IAuthUsecase) {
 		authUsecase: usecase,
 	}
 
+	router.Use(middleware.HandleCORS)
 	router.POST("/api/auth/login", ac.Login)
 	router.GET("/api/auth/introspect", middleware.HandleIntrospectTokenMiddleware(), ac.IntrospectToken)
 	router.GET("/api/auth/refresh", middleware.HandleRefreshTokenRequestMiddleware(), ac.RefreshToken)
