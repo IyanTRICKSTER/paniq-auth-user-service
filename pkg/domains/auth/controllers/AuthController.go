@@ -20,6 +20,10 @@ func RunAuthController(router *gin.Engine, usecase contracts.IAuthUsecase) {
 		authUsecase: usecase,
 	}
 
+	router.OPTIONS("/*path", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
+
 	router.Use(middleware.HandleCORS)
 	router.POST("/api/auth/login", ac.Login)
 	router.GET("/api/auth/introspect", middleware.HandleIntrospectTokenMiddleware(), ac.IntrospectToken)
