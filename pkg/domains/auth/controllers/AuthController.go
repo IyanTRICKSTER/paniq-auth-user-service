@@ -5,8 +5,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"paniq-auth-user-service/pkg/contracts"
+	"paniq-auth-user-service/pkg/contracts/statusCodes"
 	"paniq-auth-user-service/pkg/domains/auth/middleware"
 	"paniq-auth-user-service/pkg/requests"
+	"paniq-auth-user-service/pkg/response"
 )
 
 type AuthController struct {
@@ -20,11 +22,7 @@ func RunAuthController(router *gin.Engine, usecase contracts.IAuthUsecase) {
 		authUsecase: usecase,
 	}
 
-	router.OPTIONS("/*path", func(c *gin.Context) {
-		c.Status(http.StatusOK)
-	})
-
-	router.Use(middleware.HandleCORS)
+	router.Use(middleware.HandleCORS())
 	router.POST("/api/auth/login", ac.Login)
 	router.GET("/api/auth/introspect", middleware.HandleIntrospectTokenMiddleware(), ac.IntrospectToken)
 	router.GET("/api/auth/refresh", middleware.HandleRefreshTokenRequestMiddleware(), ac.RefreshToken)
@@ -35,7 +33,11 @@ func (c AuthController) Login(ctx *gin.Context) {
 	var req requests.LoginUserRequest
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, response.New(
+			response.AuthResponse{},
+			false,
+			statusCodes.Error,
+			err.Error(), nil).ToMapStringInterface())
 		return
 	}
 
