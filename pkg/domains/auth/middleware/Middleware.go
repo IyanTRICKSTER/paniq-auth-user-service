@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"paniq-auth-user-service/pkg/contracts/apiResources"
 	"paniq-auth-user-service/pkg/contracts/statusCodes"
+	"paniq-auth-user-service/pkg/response"
 	"strconv"
 	"strings"
 )
@@ -19,6 +20,14 @@ const (
 func HandleIntrospectTokenMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		targetResource := c.Request.Header.Get("X-Target-Resource")
+		if targetResource == "" {
+			c.AbortWithStatusJSON(http.StatusBadRequest,
+				response.New(response.AuthResponse{},
+					false,
+					statusCodes.Error,
+					"invalid resource!", nil).ToMapStringInterface())
+			return
+		}
 
 		var accessToken string
 

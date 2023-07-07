@@ -4,6 +4,6 @@ type RESOURCE string
 
 const (
 	USER         RESOURCE = "user"
-	POST         RESOURCE = "post"
+	POST         RESOURCE = "posts"
 	NOTIFICATION RESOURCE = "notification"
 )

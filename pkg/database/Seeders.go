@@ -41,6 +41,37 @@ func PermissionSeeder(conn *gorm.DB) []error {
 			Resource: apiResources.USER,
 			Roles:    nil,
 		},
+		//Post permission
+		{
+			Name:     "View Post",
+			Code:     permissionCodes.VIEW,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
+		{
+			Name:     "List Post",
+			Code:     permissionCodes.LIST,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
+		{
+			Name:     "Create Post",
+			Code:     permissionCodes.CREATE,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
+		{
+			Name:     "Update Post",
+			Code:     permissionCodes.UPDATE,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
+		{
+			Name:     "Delete Post",
+			Code:     permissionCodes.DELETE,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
 	}
 
 	var errs []error
@@ -79,6 +110,26 @@ func RoleSeeder(conn *gorm.DB) []error {
 					ID:   5,
 					Code: permissionCodes.DELETE,
 				},
+				{
+					ID:   6,
+					Code: permissionCodes.VIEW,
+				},
+				{
+					ID:   7,
+					Code: permissionCodes.LIST,
+				},
+				{
+					ID:   8,
+					Code: permissionCodes.CREATE,
+				},
+				{
+					ID:   9,
+					Code: permissionCodes.UPDATE,
+				},
+				{
+					ID:   10,
+					Code: permissionCodes.DELETE,
+				},
 			},
 		},
 		{
@@ -90,8 +141,40 @@ func RoleSeeder(conn *gorm.DB) []error {
 					Code: permissionCodes.VIEW,
 				},
 				{
+					ID:   2,
+					Code: permissionCodes.LIST,
+				},
+				{
+					ID:   3,
+					Code: permissionCodes.CREATE,
+				},
+				{
 					ID:   4,
 					Code: permissionCodes.UPDATE,
+				},
+				{
+					ID:   5,
+					Code: permissionCodes.DELETE,
+				},
+				{
+					ID:   6,
+					Code: permissionCodes.VIEW,
+				},
+				{
+					ID:   7,
+					Code: permissionCodes.LIST,
+				},
+				{
+					ID:   8,
+					Code: permissionCodes.CREATE,
+				},
+				{
+					ID:   9,
+					Code: permissionCodes.UPDATE,
+				},
+				{
+					ID:   10,
+					Code: permissionCodes.DELETE,
 				},
 			},
 		},
@@ -104,8 +187,40 @@ func RoleSeeder(conn *gorm.DB) []error {
 					Code: permissionCodes.VIEW,
 				},
 				{
+					ID:   2,
+					Code: permissionCodes.LIST,
+				},
+				{
+					ID:   3,
+					Code: permissionCodes.CREATE,
+				},
+				{
 					ID:   4,
 					Code: permissionCodes.UPDATE,
+				},
+				{
+					ID:   5,
+					Code: permissionCodes.DELETE,
+				},
+				{
+					ID:   6,
+					Code: permissionCodes.VIEW,
+				},
+				{
+					ID:   7,
+					Code: permissionCodes.LIST,
+				},
+				{
+					ID:   8,
+					Code: permissionCodes.CREATE,
+				},
+				{
+					ID:   9,
+					Code: permissionCodes.UPDATE,
+				},
+				{
+					ID:   10,
+					Code: permissionCodes.DELETE,
 				},
 			},
 		},
