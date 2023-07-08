@@ -72,6 +72,12 @@ func PermissionSeeder(conn *gorm.DB) []error {
 			Resource: apiResources.POST,
 			Roles:    nil,
 		},
+		{
+			Name:     "Validate Post",
+			Code:     permissionCodes.VALIDATE_POST,
+			Resource: apiResources.POST,
+			Roles:    nil,
+		},
 	}
 
 	var errs []error
@@ -130,6 +136,10 @@ func RoleSeeder(conn *gorm.DB) []error {
 					ID:   10,
 					Code: permissionCodes.DELETE,
 				},
+				{
+					ID:   11,
+					Code: permissionCodes.VALIDATE_POST,
+				},
 			},
 		},
 		{
@@ -176,6 +186,10 @@ func RoleSeeder(conn *gorm.DB) []error {
 					ID:   10,
 					Code: permissionCodes.DELETE,
 				},
+				{
+					ID:   11,
+					Code: permissionCodes.VALIDATE_POST,
+				},
 			},
 		},
 		{
@@ -221,6 +235,10 @@ func RoleSeeder(conn *gorm.DB) []error {
 				{
 					ID:   10,
 					Code: permissionCodes.DELETE,
+				},
+				{
+					ID:   11,
+					Code: permissionCodes.VALIDATE_POST,
 				},
 			},
 		},
