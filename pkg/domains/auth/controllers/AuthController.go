@@ -54,6 +54,10 @@ func (c AuthController) IntrospectToken(ctx *gin.Context) {
 	if introspectedJWTToken, exists := ctx.Get(middleware.IntrospectedAccessToken); exists {
 		res := c.authUsecase.IntrospectToken(ctx, introspectedJWTToken.(contracts.IMiddlewareIntrospectToken))
 		if res.IsFailed() {
+			if res.ErrorIs(statusCodes.ErrExtractJWTToken) {
+				ctx.JSON(http.StatusUnauthorized, res.ToMapStringInterface())
+				return
+			}
 			ctx.JSON(http.StatusInternalServerError, res.ToMapStringInterface())
 			return
 		}
