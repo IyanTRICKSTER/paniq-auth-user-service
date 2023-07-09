@@ -25,6 +25,7 @@ func RunUserController(router *gin.Engine, usecase contracts.IUserUsecase) {
 
 	apiGroup := router.Group("api/user")
 	apiGroup.GET("list", middleware.HandleUnauthenticatedRequestMiddleware(), ac.FetchAllUser)
+	apiGroup.GET("current", middleware.HandleUnauthenticatedRequestMiddleware(), ac.Me)
 	apiGroup.GET(":id", middleware.HandleUnauthenticatedRequestMiddleware(), ac.FetchUserByID)
 	apiGroup.POST("register", middleware.HandleUnauthenticatedRequestMiddleware(), ac.CreateAccount)
 	apiGroup.PATCH("update/:id", middleware.HandleUnauthenticatedRequestMiddleware(), ac.UpdateAccount)
@@ -62,7 +63,6 @@ func (u UserController) FetchAllUser(c *gin.Context) {
 }
 
 func (u UserController) FetchUserByID(c *gin.Context) {
-
 	userID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(
@@ -78,6 +78,26 @@ func (u UserController) FetchUserByID(c *gin.Context) {
 
 	res := u.userUsecase.FetchUserByID(c, uint(userID))
 	if res.IsFailed() {
+		if res.ErrorIs(statusCodes.ModelNotFound) {
+			c.JSON(http.StatusNotFound, res.ToMapStringInterface())
+			return
+		}
+		c.JSON(http.StatusInternalServerError, res.ToMapStringInterface())
+		return
+	}
+
+	c.JSON(http.StatusOK, res.ToMapStringInterface())
+	return
+}
+
+func (u UserController) Me(c *gin.Context) {
+	auth := c.Value(middleware.AuthenticatedRequest).(contracts.IAuthenticatedRequest)
+	res := u.userUsecase.FetchUserByID(c, auth.GetUserID())
+	if res.IsFailed() {
+		if res.ErrorIs(statusCodes.ModelNotFound) {
+			c.JSON(http.StatusNotFound, res.ToMapStringInterface())
+			return
+		}
 		c.JSON(http.StatusInternalServerError, res.ToMapStringInterface())
 		return
 	}

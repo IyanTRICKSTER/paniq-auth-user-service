@@ -58,7 +58,7 @@ func (c AuthController) IntrospectToken(ctx *gin.Context) {
 				ctx.JSON(http.StatusUnauthorized, res.ToMapStringInterface())
 				return
 			}
-			ctx.JSON(http.StatusInternalServerError, res.ToMapStringInterface())
+			ctx.JSON(http.StatusBadRequest, res.ToMapStringInterface())
 			return
 		}
 
